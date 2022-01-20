@@ -1,0 +1,23 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: Test Cov
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          cache: 'yarn'
+      - name: install deps
+        run: yarn install
+      - name: test with jest
+        run: yarn test --coverage
+      - name: coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
