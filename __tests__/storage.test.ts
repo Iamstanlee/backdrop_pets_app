@@ -3,11 +3,11 @@ import {Dog} from '../src/types';
 import {StorageImpl} from '../src/storage';
 
 beforeEach(async () => {
-  await AsyncStorage.clear();
+  StorageImpl.clear();
 });
 
 afterAll(async () => {
-  await AsyncStorage.clear();
+  StorageImpl.clear();
 });
 
 const dog: Dog = {
