@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {
   View,
   FlatList,
@@ -18,11 +18,7 @@ const Favourite = () => {
   const kWidth = Dimensions.get('window').width;
   const kColumn = 2;
   const kTile = kWidth / kColumn - 24;
-  const {favourite, getLiked} = useFavouriteContext();
-
-  useEffect(() => {
-    getLiked!();
-  }, []);
+  const {favourite} = useFavouriteContext();
 
   if (!favourite) return <LoadingIndicator />;
 
