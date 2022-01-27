@@ -15,7 +15,7 @@ let result: RenderResult<any>,
 
 let initialProps: number;
 
-beforeEach(() => {
+beforeEach(async () => {
   initialProps = 0;
   global.fetch = jest.fn(fetchMock) as jest.Mock;
   ({result, waitForNextUpdate, rerender} = renderHook(
@@ -24,13 +24,12 @@ beforeEach(() => {
       initialProps: initialProps,
     },
   ));
+  await waitForNextUpdate();
 });
 
 afterAll(() => jest.clearAllMocks());
 
 it('should return data on success requests', async () => {
-  await waitForNextUpdate();
-
   expect(result.current.data).toBe(mockResponse);
   expect(result.current.isLoading).toBeFalsy();
   expect(result.current.error).toBeUndefined();
@@ -48,8 +47,19 @@ it('should return error message when request failed', async () => {
   expect(result.current.error).toBe(errMsg);
 });
 
-it('should not fetch data unless page props changes', async () => {
+it('should return error message when request status code is not 200', async () => {
+  global.fetch = (jest.fn(fetchMock) as jest.Mock).mockResolvedValueOnce(
+    Promise.resolve({
+      status: 500,
+      json: () => Promise.resolve(mockResponse as any),
+    }),
+  );
+  rerender(++initialProps);
   await waitForNextUpdate();
+  expect(result.current.error).toBeDefined();
+});
+
+it('should not fetch data unless page props changes', async () => {
   rerender(initialProps);
   expect(result.current.isFetching).toBeFalsy();
 

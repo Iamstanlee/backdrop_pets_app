@@ -2,7 +2,7 @@ import React, {createContext, useContext, useEffect, useState} from 'react';
 import {StorageImpl} from '../storage';
 import {Dog} from '../types';
 
-const FavouriteContext = createContext<Partial<Props>>({});
+const FavouriteContext = createContext<Partial<Props | null>>(null);
 
 export type Props = {
   favourite: Dog[];

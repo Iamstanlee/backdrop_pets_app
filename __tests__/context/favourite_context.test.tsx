@@ -14,16 +14,21 @@ const wrapper: React.FC = ({children}) => (
 let result: RenderResult<Partial<Props>>,
   waitForNextUpdate: (options?: {timeout?: number | false}) => Promise<void>;
 
-beforeEach(() => {
+beforeEach(async () => {
   ({result, waitForNextUpdate} = renderHook(() => useFavouriteContext(), {
     wrapper,
   }));
+  await waitForNextUpdate();
 });
 
 afterAll(() => jest.clearAllMocks());
 
+it('should try error when useFavouriteContext is called without a FavouriteContextProvider parent', async () => {
+  ({result} = renderHook(() => useFavouriteContext()));
+  expect(result.error).toBeDefined();
+});
+
 it('should add item to favourite list', async () => {
-  await waitForNextUpdate();
   act(() => {
     result.current.addLiked!(mockDog);
   });
@@ -31,7 +36,6 @@ it('should add item to favourite list', async () => {
 });
 
 it('should not add item to favourite list if item is already in the list', async () => {
-  await waitForNextUpdate();
   act(() => {
     result.current.addLiked!(mockDog);
   });
@@ -42,6 +46,5 @@ it('should not add item to favourite list if item is already in the list', async
 });
 
 it('should return item in favourite list initially', async () => {
-  await waitForNextUpdate();
   expect(result.current.favourite).toHaveLength(1);
 });
