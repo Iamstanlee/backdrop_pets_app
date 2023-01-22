@@ -1,6 +1,6 @@
 # Backdrop Pets App
 
-[![build status](https://img.shields.io/github/workflow/status/Iamstanlee/backdrop_pets_app/CI)](https://github.com/Iamstanlee/backdrop_pets_app/actions?query=CI)
+[![CI](https://github.com/Iamstanlee/backdrop_pets_app/actions/workflows/main.yml/badge.svg)](https://github.com/Iamstanlee/backdrop_pets_app/actions/workflows/main.yml)
 [![coverage Status](https://coveralls.io/repos/github/Iamstanlee/backdrop_pets_app/badge.svg?branch=main)](https://coveralls.io/github/Iamstanlee/backdrop_pets_app?branch=main)
 
 ### Tools
